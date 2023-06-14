@@ -1,13 +1,11 @@
-const path = require('path');
 const fs = require('fs');
-const HippyDynamicImportPlugin = require('@hippy/hippy-dynamic-import-plugin');
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const { VueLoaderPlugin } = require('vue-loader');
+const path = require('path');
 const webpack = require('webpack');
+const HippyDynamicImportPlugin = require('@hippy/hippy-dynamic-import-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 
-const platform = 'android';
 const pkg = require('../package.json');
-const manifest = require('../dist/android/vendor-manifest.json');
 let cssLoader = '@hippy/vue-css-loader';
 const hippyVueCssLoaderPath = path.resolve(__dirname, '../../../packages/hippy-vue-css-loader/dist/css-loader.js');
 if (fs.existsSync(hippyVueCssLoaderPath)) {
@@ -17,30 +15,57 @@ if (fs.existsSync(hippyVueCssLoaderPath)) {
   console.warn('* Using the @hippy/vue-css-loader defined in package.json');
 }
 
+
 module.exports = {
-  mode: 'production',
-  bail: true,
+  mode: 'development',
+  devtool: 'eval-source-map',
+  watch: true,
+  watchOptions: {
+    aggregateTimeout: 1500,
+  },
+  devServer: {
+    // remote debug server address
+    remote: {
+      protocol: 'http',
+      host: '127.0.0.1',
+      port: 38989,
+    },
+    // support inspect vue components, store and router, by default is disabled
+    vueDevtools: false,
+    // support debug multiple project with only one debug server, by default is set false.
+    multiple: false,
+    // by default hot and liveReload option are true, you could set only liveReload to true
+    // to use live reload
+    hot: true,
+    liveReload: true,
+    client: {
+      overlay: false,
+    },
+    devMiddleware: {
+      writeToDisk: true,
+    },
+  },
   entry: {
-    index: [path.resolve(pkg.nativeMain)],
+    index: ['@hippy/rejection-tracking-polyfill', path.resolve(pkg.nativeMain)],
   },
   output: {
-    filename: `[name].${platform}.js`,
-    path: path.resolve(`./dist/${platform}/`),
+    filename: 'index.bundle',
+    // chunkFilename: '[name].[chunkhash].js',
+    strictModuleExceptionHandling: true,
+    path: path.resolve('./dist/dev/'),
     globalObject: '(0, eval)("this")',
-    // CDN path can be configured to load children bundles from remote server
-    // publicPath: 'https://xxx/hippy/hippyVueNextDemo/',
   },
   plugins: [
-    new webpack.NamedModulesPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-      __PLATFORM__: JSON.stringify(platform),
-    }),
-    new CaseSensitivePathsPlugin(),
     new VueLoaderPlugin(),
-    new webpack.DllReferencePlugin({
-      context: path.resolve(__dirname, '..'),
-      manifest,
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('development'),
+        HOST: JSON.stringify(process.env.DEV_HOST || '127.0.0.1'),
+        PORT: JSON.stringify(process.env.DEV_PORT || 38989),
+      },
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: false,
+      __PLATFORM__: null,
     }),
     new HippyDynamicImportPlugin(),
     // LimitChunkCountPlugin can control dynamic import ability
@@ -48,11 +73,12 @@ module.exports = {
     // new webpack.optimize.LimitChunkCountPlugin({
     //   maxChunks: 1,
     // }),
-    // use SourceMapDevToolPlugin can generate sourcemap file
+    // use SourceMapDevToolPlugin can generate sourcemap file while setting devtool to false
     // new webpack.SourceMapDevToolPlugin({
     //   test: /\.(js|jsbundle|css|bundle)($|\?)/i,
     //   filename: '[file].map',
     // }),
+    new CleanWebpackPlugin(),
   ],
   module: {
     rules: [
@@ -80,24 +106,9 @@ module.exports = {
         test: /\.t|js$/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: 'esbuild-loader',
             options: {
-              sourceType: 'unambiguous',
-              presets: [
-                [
-                  '@babel/preset-env',
-                  {
-                    targets: {
-                      chrome: 57,
-                    },
-                  },
-                ],
-              ],
-              plugins: [
-                ['@babel/plugin-proposal-class-properties'],
-                ['@babel/plugin-proposal-decorators', { legacy: true }],
-                ['@babel/plugin-transform-runtime', { regenerator: true }],
-              ],
+              target: 'es2015',
             },
           },
         ],
@@ -107,12 +118,11 @@ module.exports = {
         use: [{
           loader: 'url-loader',
           options: {
-            // if you would like to use base64 for picture, uncomment limit: true
-            // limit: true,
-            limit: 8192,
-            fallback: 'file-loader',
-            name: '[name].[ext]',
-            outputPath: 'assets/',
+            limit: true,
+            // limit: 8192,
+            // fallback: 'file-loader',
+            // name: '[name].[ext]',
+            // outputPath: 'assets/',
           },
         }],
       },

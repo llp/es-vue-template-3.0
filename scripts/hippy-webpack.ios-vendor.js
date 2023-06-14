@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
-const { VueLoaderPlugin } = require('vue-loader');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 
-const platform = 'android';
+const platform = 'ios';
 
 module.exports = {
   mode: 'production',
@@ -61,7 +61,7 @@ module.exports = {
                   '@babel/preset-env',
                   {
                     targets: {
-                      chrome: 57,
+                      ios: 8,
                     },
                   },
                 ],

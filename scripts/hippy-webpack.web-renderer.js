@@ -1,36 +1,55 @@
-const fs = require('fs');
 const path = require('path');
-const webpack = require('webpack');
+const fs = require('fs');
 const { VueLoaderPlugin } = require('vue-loader');
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HippyDynamicImportPlugin = require('@hippy/hippy-dynamic-import-plugin');
+const pkg = require('../package.json');
 
-const platform = 'android';
+let cssLoader = '@hippy/vue-css-loader';
+const hippyVueCssLoaderPath = path.resolve(__dirname, '../../../packages/hippy-vue-css-loader/dist/css-loader.js');
+if (fs.existsSync(hippyVueCssLoaderPath)) {
+  console.warn(`* Using the @hippy/vue-css-loader in ${hippyVueCssLoaderPath}`);
+  cssLoader = hippyVueCssLoaderPath;
+} else {
+  console.warn('* Using the @hippy/vue-css-loader defined in package.json');
+}
 
+const platform = 'web';
 module.exports = {
   mode: 'production',
   bail: true,
   entry: {
-    vendor: [path.resolve(__dirname, './vendor.js')],
+    index: ['regenerator-runtime', path.resolve(pkg.webMain)],
   },
   output: {
-    filename: `[name].${platform}.js`,
+    filename: '[name].[contenthash:8].js',
     path: path.resolve(`./dist/${platform}/`),
-    globalObject: '(0, eval)("this")',
-    library: 'hippyVueBase',
   },
   plugins: [
-    new webpack.NamedModulesPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-      __PLATFORM__: JSON.stringify(platform),
-    }),
-    new CaseSensitivePathsPlugin(),
     new VueLoaderPlugin(),
-    new webpack.DllPlugin({
-      context: path.resolve(__dirname, '..'),
-      path: path.resolve(__dirname, `../dist/${platform}/[name]-manifest.json`),
-      name: 'hippyVueBase',
+    new HtmlWebpackPlugin({
+      inject: true,
+      scriptLoading: 'blocking',
+      template: path.resolve('./public/web-renderer.html'),
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+      __PLATFORM__: null,
+    }),
+    // new HippyDynamicImportPlugin(),
+    // LimitChunkCountPlugin can control dynamic import ability
+    // Using 1 will prevent any additional chunks from being added
+    // new webpack.optimize.LimitChunkCountPlugin({
+    //   maxChunks: 1,
+    // }),
+    // use SourceMapDevToolPlugin can generate sourcemap file
+    // new webpack.SourceMapDevToolPlugin({
+    //   test: /\.(js|jsbundle|css|bundle)($|\?)/i,
+    //   filename: '[file].map',
+    // }),
   ],
   module: {
     rules: [
@@ -51,11 +70,16 @@ module.exports = {
         ],
       },
       {
-        test: /\.(js)$/,
+        test: /\.(le|c)ss$/,
+        use: [cssLoader, 'less-loader'],
+      },
+      {
+        test: /\.t|js$/,
         use: [
           {
             loader: 'babel-loader',
             options: {
+              sourceType: 'unambiguous',
               presets: [
                 [
                   '@babel/preset-env',
@@ -68,10 +92,44 @@ module.exports = {
               ],
               plugins: [
                 ['@babel/plugin-proposal-class-properties'],
+                ['@babel/plugin-proposal-decorators', { legacy: true }],
+                ['@babel/plugin-transform-runtime', { regenerator: true }],
               ],
             },
           },
         ],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: true,
+            // TODO local path not supported on defaultSource/backgroundImage
+            // limit: 8192,
+            // fallback: 'file-loader',
+            // name: '[name].[ext]',
+            // outputPath: 'assets/',
+          },
+        }],
+      },
+      {
+        test: /\.(ts)$/,
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              appendTsSuffixTo: [/\.vue$/],
+            },
+          },
+        ],
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
       },
     ],
   },
