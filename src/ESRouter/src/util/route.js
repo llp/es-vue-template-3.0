@@ -1,5 +1,5 @@
 import {stringifyQuery} from './query';
-import {ES_LIFECYCLE_ON_INITIALIZED} from "@extscreen/es-core";
+import {ES_LIFECYCLE_ON_INITIALIZED} from "../../../ESCore/core/lifecycle/ESPageLifecycleState";
 
 const trailingSlashRE = /\/?$/;
 

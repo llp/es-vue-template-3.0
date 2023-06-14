@@ -1,8 +1,7 @@
 /**
  *
  */
-import {getVue, isFunction} from '@vue/util/index.js';
-import {ESLog} from "@extscreen/es-log";
+import {getVue, isFunction} from '../util/utils.js';
 import {
   ES_LIFECYCLE_ON_UNINITIALIZED,
   ES_LIFECYCLE_ON_INITIALIZED,
@@ -15,15 +14,12 @@ import {
   ES_LIFECYCLE_ON_SAVE_INSTANCE_SATE,
   ES_LIFECYCLE_ON_START,
   ES_LIFECYCLE_ON_STOP
-} from "@extscreen/es-core";
+} from "../../../ESCore/core/lifecycle/ESPageLifecycleState";
 
 export function lifecycleChanged(componentInstance, evt, params) {
   try {
     if (componentInstance) {
       if (isFunction(componentInstance.onESLifecycleChanged)) {
-        if (ESLog.isLoggable(ESLog.DEBUG)) {
-          ESLog.d('ESRouter', '-------onESLifecycleChanged------>>>>' + evt.lifecycle)
-        }
         componentInstance.onESLifecycleChanged(evt.lifecycle, params);
       }
       //
@@ -31,62 +27,35 @@ export function lifecycleChanged(componentInstance, evt, params) {
         //onCreate
         if (evt.lifecycle === 'onCreate') {
           if (isFunction(componentInstance.onESCreate)) {
-            if (ESLog.isLoggable(ESLog.DEBUG)) {
-              ESLog.d('ESRouter', '-------onESCreate---success--->>>>')
-            }
             componentInstance.onESCreate(params);
           } else {
-            if (ESLog.isLoggable(ESLog.DEBUG)) {
-              ESLog.d('ESRouter', '-------onESCreate---error--->>>>')
-            }
           }
         }
         //onStart
         else if (evt.lifecycle === 'onStart') {
           if (isFunction(componentInstance.onESStart)) {
-            if (ESLog.isLoggable(ESLog.DEBUG)) {
-              ESLog.d('ESRouter', '-------onESStart---success--->>>>')
-            }
             componentInstance.onESStart();
           } else {
-            if (ESLog.isLoggable(ESLog.DEBUG)) {
-              ESLog.d('ESRouter', '-------onESStart---error--->>>>')
-            }
           }
         }
         //onRestoreInstanceSate
         else if (evt.lifecycle === 'onRestoreInstanceSate') {
           if (isFunction(componentInstance.onESRestoreInstanceState)) {
-            if (ESLog.isLoggable(ESLog.DEBUG)) {
-              ESLog.d('ESRouter', '-------onESRestoreInstanceState---success--->>>>')
-            }
             componentInstance.onESRestoreInstanceState(params);
           } else {
-            if (ESLog.isLoggable(ESLog.DEBUG)) {
-              ESLog.d('ESRouter', '-------onESRestoreInstanceState---error--->>>>')
-            }
           }
         }
         //onResume
         else if (evt.lifecycle === 'onResume') {
           if (isFunction(componentInstance.onESResume)) {
-            if (ESLog.isLoggable(ESLog.DEBUG)) {
-              ESLog.d('ESRouter', '-------onESResume---success--->>>>')
-            }
             componentInstance.onESResume();
           } else {
-            if (ESLog.isLoggable(ESLog.DEBUG)) {
-              ESLog.d('ESRouter', '-------onESResume---error--->>>>')
-            }
           }
         }
       }
     }
     //
     else {
-      if (ESLog.isLoggable(ESLog.DEBUG)) {
-        ESLog.d('ESRouter', '-------onESLifecycleChanged---实例对象为空--->>>>')
-      }
     }
   } catch (e) {
   }
@@ -176,11 +145,7 @@ export function destroyRoute(route, saveInstanceState) {
         }
       }
     }
-    ESLog.e('ESRouter', '------destroyRoute----生命周期-->>>>' + route.lifecycle.state)
   } catch (e) {
-    if (ESLog.isLoggable(ESLog.DEBUG)) {
-      ESLog.d('ESRouter', '-----ERROR-destroyRoute----生命周期-->>>>' + saveInstanceState)
-    }
   }
 }
 
@@ -224,11 +189,7 @@ export function clearRouteStack(route) {
     //更改标志
     route.lifecycle.isDestroyed = true;
 
-    ESLog.e('ESRouter', '------clearRouteStack----生命周期-->>>>' + route.lifecycle.state)
   } catch (e) {
-    if (ESLog.isLoggable(ESLog.DEBUG)) {
-      ESLog.d('ESRouter', '-----ERROR-clearRouteStack----生命周期-->>>>')
-    }
   }
 }
 
@@ -282,7 +243,6 @@ export function stopRoute(route) {
         }
       }
     }
-    ESLog.e('ESRouter', '------stopRoute----生命周期-->>>>' + route.lifecycle.state)
   } catch (e) {
 
   }
@@ -408,9 +368,6 @@ export function newIntentRoute(route, intent) {
     }
     //
     else {
-      if (ESLog.isLoggable(ESLog.DEBUG)) {
-        ESLog.d('ESRouter', '----newIntent方法为空-->>>>');
-      }
     }
   } catch (e) {
   }

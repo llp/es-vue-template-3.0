@@ -1086,30 +1086,10 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.16.17.tgz#c5a1a4bfe1b57f0c3e61b29883525c6da3e5c091"
   integrity sha512-y+EHuSchhL7FjHgvQL/0fnnFmO4T1bhvWANX6gcnqTjtnKWbTvUMCpGnv2+t+31d7RzyEAYAd4u2fnIhHL6N/Q==
 
-"@extscreen/es-component@^3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@extscreen/es-component/-/es-component-3.0.6.tgz#b57ea2b6950047368c1dc45aa2f7611933e6c201"
-  integrity sha512-/Ph4WeuvaEiHBaRR8+ynIh548CgUxVXucZlcwZd8yoEeDdF22fXiOupNvbooku04WBWjGxXbs1zV9Tr+vXBZOg==
-
-"@extscreen/es-core@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@extscreen/es-core/-/es-core-3.0.2.tgz#b6fd9f985f3a843fc646f26b4c08705b3dd152c2"
-  integrity sha512-vi4iNkYF9yKn0tErYvaa+JjKxaSKdXKx6Vl1negMxWUJA23fqf0aw1WynX08VjDdKzo9ogr/KPEEHCGu6olXWg==
-
-"@extscreen/es-log@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@extscreen/es-log/-/es-log-3.0.0.tgz#1392084b840400bc162a7117deb0d90a147ef3ef"
-  integrity sha512-GKqbKzX8PTPopDuush86bITTSk57ghpYTM9i/uszKn5ahuqOKR9m6qXedfpgP7ZI6/H1fnPzrSpfwmhl1YfG3Q==
-
 "@extscreen/es-router@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@extscreen/es-router/-/es-router-3.0.0.tgz#e195e20fd5b048cbbc313f7f488dc119efd8d903"
   integrity sha512-svYkxfjNtPGuX7s1WIvku4Ahr3+MQhxuwkMrJ0vYmyDLb24ufBxg+xbsGbZteJzAT2Xljle0TZfbtcMqw8AvQQ==
-
-"@extscreen/es-runtime@2.1.7":
-  version "2.1.7"
-  resolved "https://registry.yarnpkg.com/@extscreen/es-runtime/-/es-runtime-2.1.7.tgz#9483166e3de013d67b5275b5c3c422ddbb1f7b7d"
-  integrity sha512-zEyXf9U9VrCvR1cDMMtrcRRBez/eoMP/xdr/pTXpJtr1KGC4nYIN6fIxh0yxJay2aPhUOulO6rMax1iDZWLsfA==
 
 "@hapi/address@2.x.x":
   version "2.1.4"

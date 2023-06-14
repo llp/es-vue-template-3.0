@@ -15,9 +15,6 @@
     "web:build": "node ./scripts/env-polyfill.js webpack --config ./scripts/hippy-webpack.web-renderer.js"
   },
   "dependencies": {
-    "@extscreen/es-component": "^3.0.6",
-    "@extscreen/es-log": "3.0.0",
-    "@extscreen/es-router": "^3.0.0",
     "@hippy/vue-next": "latest",
     "@hippy/vue-router-next-history": "latest",
     "@hippy/web-renderer": "latest",

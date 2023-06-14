@@ -1,0 +1,12 @@
+//
+export const ES_LIFECYCLE_ON_UNINITIALIZED = -1;
+export const ES_LIFECYCLE_ON_INITIALIZED = 0;
+export const ES_LIFECYCLE_ON_CREATE = 1;
+export const ES_LIFECYCLE_ON_RESTART = 2;
+export const ES_LIFECYCLE_ON_START = 3;
+export const ES_LIFECYCLE_ON_RESTORE_INSTANCE_SATE = 4;
+export const ES_LIFECYCLE_ON_RESUME = 5;
+export const ES_LIFECYCLE_ON_PAUSE = 6;
+export const ES_LIFECYCLE_ON_STOP = 7;
+export const ES_LIFECYCLE_ON_SAVE_INSTANCE_SATE = 8;
+export const ES_LIFECYCLE_ON_DESTROY = 9;

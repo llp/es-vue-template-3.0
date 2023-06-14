@@ -11,15 +11,14 @@ const app: HippyApp = createApp(App, {
 });
 
 //--------------------ESApp-----------------------
-import {setESApp} from "@extscreen/es-core";
+import {setESApp} from "./ESCore/core/app/ESApp.js";
 
 setESApp(app);
 //-------------------ESComponent-----------------
-import {ESComponent} from "@extscreen/es-component";
-
-app.use(ESComponent);
+// import {ESComponent} from "@extscreen/es-component";
+// app.use(ESComponent);
 //-------------------ESRouter---------------------
-import ESRouter from "@extscreen/es-router";
+import ESRouter from "./ESRouter/src/index.js";
 import routes from './routes';
 
 const router = new ESRouter(routes);

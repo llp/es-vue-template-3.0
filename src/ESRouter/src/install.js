@@ -1,4 +1,4 @@
-import {setVue, getVue} from '@vue/util/index.js';
+import {setVue, getVue} from './util/utils.js';
 import View from './components/view';
 import Link from './components/link';
 import registerPageRouterView from "./components/PageRouterView";

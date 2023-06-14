@@ -1,5 +1,4 @@
 import {lifecycleChanged} from "../lifecycle/LifecycleManager";
-import {ESLog} from "@extscreen/es-log";
 
 import {
   ES_LIFECYCLE_ON_UNINITIALIZED,
@@ -10,7 +9,7 @@ import {
   ES_LIFECYCLE_ON_STOP,
   ES_LIFECYCLE_ON_DESTROY,
   ES_LIFECYCLE_ON_RESTORE_INSTANCE_SATE,
-} from "@extscreen/es-core";
+} from "../../../ESCore/core/lifecycle/ESPageLifecycleState";
 
 export default {
   name: 'ESRouterView',
@@ -59,9 +58,6 @@ export default {
             c.lifecycle.instance = component.componentInstance;
             try {
               let componentInstance = component.componentInstance;
-              if (ESLog.isLoggable(ESLog.DEBUG)) {
-                ESLog.d("ESRouter", c.name + '---render---生命周期----->>>' + c.lifecycle.state)
-              }
               if (c.lifecycle.state <= ES_LIFECYCLE_ON_INITIALIZED) {
 
                 let uninitialized = c.lifecycle.state === ES_LIFECYCLE_ON_UNINITIALIZED
@@ -97,9 +93,6 @@ export default {
         }
         //
         else {
-          if (ESLog.isLoggable(ESLog.DEBUG)) {
-            ESLog.d('ESRouter', '-----native--生命周期---不渲染----->>>>index:' + i);
-          }
         }
         //----------------------------------------------------------------------
 
@@ -129,16 +122,10 @@ export default {
     }
     data.ref = 'pageRouter';
     if (vueRouter.isESPageRouterViewSupported()) {
-      if (ESLog.isLoggable(ESLog.DEBUG)) {
-        ESLog.d('ESRouter', '-------render----渲染路由-page-router组件---->>>>');
-      }
       return h('page-router', data, componentList);
     }
     //
     else {
-      if (ESLog.isLoggable(ESLog.DEBUG)) {
-        ESLog.d('ESRouter', '-------render----渲染路由-div组件---->>>>');
-      }
       return h('div', data, componentList);
     }
   }

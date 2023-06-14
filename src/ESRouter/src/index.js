@@ -1,4 +1,3 @@
-import {isFunction} from '@vue/util/index.js';
 import install from './install';
 import normalizeLocation from './util/location';
 import createMatcher from './create-matcher';
@@ -6,7 +5,6 @@ import HippyHistory from './history/hippy';
 import {START} from './util/route';
 import {assert} from './util/warn';
 import {cleanPath} from './util/path';
-import {ESLog} from "@extscreen/es-log";
 import {destroyRoute, resumeRoute, stopRoute} from "./lifecycle/LifecycleManager";
 import {
   ES_ROUTER_LAUNCH_MODE_SINGLE_TASK,
@@ -53,9 +51,6 @@ class ESRouter {
 
   setESPageRouterViewSupported(support) {
     this.pageRouterViewSupported = support;
-    if (ESLog.isLoggable(ESLog.DEBUG)) {
-      ESLog.d('ESRouter', '#----------setESPageRouterViewSupported------->>>>>' + support);
-    }
   }
 
   isESPageRouterViewSupported() {
@@ -147,9 +142,6 @@ class ESRouter {
   }
 
   push(location, onComplete, onAbort) {
-    if (ESLog.isLoggable(ESLog.DEBUG)) {
-      ESLog.d('ESRouter', '#-------------push--------->>>>>' + location);
-    }
     this.history.push(location, onComplete, onAbort);
   }
 
@@ -163,9 +155,6 @@ class ESRouter {
 
   back() {
     let result = this.go(-1);
-    if (ESLog.isLoggable(ESLog.DEBUG)) {
-      ESLog.d('ESRouter', '#-------------back--------->>>>>' + result);
-    }
     return result;
   }
 

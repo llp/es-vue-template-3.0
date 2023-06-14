@@ -1,5 +1,5 @@
-import index from "@/views/index";
-import error from "@/views/error";
+import index from "./views/index";
+import error from "./views/error";
 
 export default {
   disableAutoBack: true,

@@ -6,11 +6,8 @@
 
 <script>
 
-import {ESPage} from "@extscreen/es-core";
-
 export default {
   name: 'error',
-  mixins: [ESPage],
   data() {
     return {};
   },

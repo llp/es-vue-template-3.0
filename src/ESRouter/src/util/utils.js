@@ -27,7 +27,7 @@ function getEventRedirector(events) {
       const [exposedEventName, nativeEventName] = event;
       if (Object.prototype.hasOwnProperty.call(this.$listeners, exposedEventName)) {
         on[event] = this[`on${capitalize(nativeEventName)}`];
-      }else{
+      } else {
       }
     } else if (Object.prototype.hasOwnProperty.call(this.$listeners, event)) {
       on[event] = this[`on${capitalize(event)}`];
@@ -36,7 +36,50 @@ function getEventRedirector(events) {
   return on;
 }
 
+function isFunction(func) {
+  return Object.prototype.toString.call(func) === '[object Function]';
+}
+
+let _Vue;
+let _App;
+
+function setVue(Vue) {
+  _Vue = Vue;
+}
+
+function getVue() {
+  return _Vue;
+}
+
+function setApp(app) {
+  _App = app;
+}
+
+function getApp() {
+  return _App;
+}
+
+
+/**
+ * Ensure a function is called only once.
+ */
+function once(fn) {
+  let called = false
+  return function () {
+    if (!called) {
+      called = true
+      fn.apply(this, arguments)
+    }
+  }
+}
+
 export {
+  once,
+  setVue,
+  getVue,
+  setApp,
+  getApp,
   capitalize,
   getEventRedirector,
+  isFunction,
 };

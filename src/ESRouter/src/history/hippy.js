@@ -1,4 +1,4 @@
-import {getVue, isFunction} from '@vue/util/index.js';
+import {getVue, isFunction} from '../util/utils.js';
 import runQueue from '../util/async';
 import {warn, isError} from '../util/warn';
 import {START, isSameRoute} from '../util/route';
@@ -17,7 +17,6 @@ import {
   destroyRouteList,
   newIntentRoute,
 } from "../lifecycle/LifecycleManager";
-import {ESLog} from "@extscreen/es-log";
 
 function normalizeBase(base) {
   // make sure there's the starting slash
@@ -146,23 +145,12 @@ class HippyHistory {
     this.errorCbs = [];
     this.limit = limit;
 
-    if (ESLog.isLoggable(ESLog.DEBUG)) {
-      ESLog.d(TAG, '-------页面总数量----constructor-->>>>' + limit);
-    }
     this.stack = [];
     this.index = -1;
   }
 
   push(location, onComplete, onAbort) {
     this.transitionTo(location, (route) => {
-      if (ESLog.isLoggable(ESLog.DEBUG)) {
-        ESLog.d("ESRouter", "$$$$$$$$$$$$$$$$$$$$生命周期$$$$$$$$$$$$$$$$$$$$")
-      }
-      if (ESLog.isLoggable(ESLog.DEBUG)) {
-        ESLog.d(TAG, '----------start--->>>>'
-          + "---->>limit:" + this.limit
-        );
-      }
       //1.前置处理
       this.stack = this.stack.slice(0, this.index + 1);
       if (route && route.matched && route.matched[0]) {
@@ -170,33 +158,18 @@ class HippyHistory {
         switch (r.launchMode) {
           //standard
           case ES_ROUTER_LAUNCH_MODE_STANDARD:
-            if (ESLog.isLoggable(ESLog.DEBUG)) {
-              ESLog.d(TAG, '----------standard---标准模式--->>>>');
-            }
             break;
           //clear task
           case ES_ROUTER_LAUNCH_MODE_CLEAR_TASK:
-            if (ESLog.isLoggable(ESLog.DEBUG)) {
-              ESLog.d(TAG, '----------clearTask---清空堆栈--->>>>');
-            }
             destroyRouteList(this.stack);
             this.stack = [];
             this.index = -1;
             break;
           //singleTask
           case ES_ROUTER_LAUNCH_MODE_SINGLE_TASK:
-            if (ESLog.isLoggable(ESLog.DEBUG)) {
-              ESLog.d(TAG, '-----------singleTask---单例--->>>>');
-            }
             let result = this.getRouteByName(route.name);
             if (result) {
               let index = result.index;
-              if (ESLog.isLoggable(ESLog.DEBUG)) {
-                ESLog.d(TAG, '----处理前------singleTask------>>>>' +
-                  "stack.length: " + this.stack.length +
-                  "需要处理的index: " + index
-                );
-              }
               //index .... end
               try {
                 let routeList = this.stack.slice(index + 1, this.stack.length + 1);
@@ -205,12 +178,6 @@ class HippyHistory {
               }
               this.stack = this.stack.slice(0, index + 1);
               this.index = index;
-              if (ESLog.isLoggable(ESLog.DEBUG)) {
-                ESLog.d(TAG, '----处理后------singleTask------>>>>' +
-                  "stack.length: " + this.stack.length +
-                  "index: " + this.index
-                );
-              }
             }
             //堆栈不存在
             else {
@@ -224,15 +191,9 @@ class HippyHistory {
       //limit
       let length = this.stack.length;
       if (length >= this.limit) {
-        if (ESLog.isLoggable(ESLog.DEBUG)) {
-          ESLog.d(TAG, '---start----------超过总数量--->>>>');
-        }
         let count = (length - this.limit) + 1;
         if (count > 0) {
           let routeList = this.stack.slice(0, count);
-          if (ESLog.isLoggable(ESLog.DEBUG)) {
-            ESLog.d(TAG, '--end-----------超过总数量，销毁的页面--->>>>' + routeList.length);
-          }
           destroyRouteList(routeList);
         }
       }
@@ -310,13 +271,6 @@ class HippyHistory {
   go(n) {
     const targetIndex = this.index + n;
     if (targetIndex < 0) {
-      if (ESLog.isLoggable(ESLog.DEBUG)) {
-        ESLog.d(TAG, '-------GO_STACK-----小于0->>>>'
-          + "---堆栈错误--->>" +
-          "stack.length:" + this.stack.length +
-          "targetIndex:" + targetIndex
-        );
-      }
 
       try {
         if (this.stack != null && this.stack.length > 0) {
@@ -331,13 +285,6 @@ class HippyHistory {
       return false;
     }
     if (targetIndex >= this.stack.length) {
-      if (ESLog.isLoggable(ESLog.DEBUG)) {
-        ESLog.d(TAG, '-------GO_STACK---大于总数量--->>>>'
-          + "---堆栈错误--->>" +
-          "stack.length:" + this.stack.length +
-          "targetIndex:" + targetIndex
-        );
-      }
       return false;
     }
 
