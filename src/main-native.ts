@@ -28,9 +28,38 @@ setESApp(app);
 
 //-------------------ESRouter---------------------
 // import ESRouter from "./ESRouter/src/index.js";
-import routes from './routes';
+// import routes from './routes';
 import {createHippyHistory, createHippyRouter} from "../packages/router/src/history";
-import {createRouter, Router, RouterOptions} from "../packages/router/src";
+import {createRouter, Router, RouteRecordRaw, RouterOptions} from "../packages/router/src";
+
+import index from "./views/index";
+import error from "./views/error";
+
+const routes: RouteRecordRaw[] = []
+
+routes.push({
+  children: [],
+  components: undefined,
+  end: false,
+  redirect: undefined,
+  sensitive: false,
+  strict: false,
+  path: '/index',
+  name: 'index',
+  component: index
+})
+
+routes.push({
+  children: [],
+  components: undefined,
+  end: false,
+  redirect: undefined,
+  sensitive: false,
+  strict: false,
+  path: '/error',
+  name: 'error',
+  component: error
+})
 
 const options: RouterOptions = {
   history: createHippyHistory(),
@@ -44,12 +73,12 @@ app.use(router);
 //----------------------------------------------
 const initCallback = ({superProps, rootViewId}) => {
   console.log('------1-------initCallback-------------????????')
-  app.mount('#root');
   // let route = {
   //   name: 'index',
   //   params: {},
   // }
-  // router.push(route);
+  router.push('/index');
+  app.mount('#root');
   console.log('------4-------initCallback-------------????????')
 };
 
