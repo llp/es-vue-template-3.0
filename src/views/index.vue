@@ -7,6 +7,9 @@
 <script>
 
 export default {
+  mounted() {
+    console.log("==========IINDEXXX=============>>>>")
+  },
   name: 'index',
   data() {
     return {

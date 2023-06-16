@@ -1,39 +1,37 @@
 <template>
   <div id="root">
-    <es-router-view/>
+    <es-router-view class="es-router-view"/>
   </div>
 </template>
 
 <script>
+import {defineComponent, ref} from '@vue/runtime-core';
+import {Native} from "@hippy/vue-next";
 
-export default {
-  name: 'ESApp',
-  data() {
-    return {
-      pageParams: {},
-    };
+export default defineComponent({
+  name: 'App',
+  setup() {
+    Native.callNative('ESToastModule', 'showToast', 'SLKDFJLSDJFLDSJF');
+    console.log('----###########---------AAAAAAAAAAAA-----------')
+    return {};
   },
-  methods: {
-    /**
-     * ESApplication 生命周期: onESCreate();
-     */
-    onESCreate(props) {
-      this.initLog();
-      return Promise.resolve()
-    },
-    /**
-     * 初始化ESLog
-     */
-    initLog() {
+});
 
-    },
-  },
-};
 </script>
 
 <style scoped>
 #root {
   width: 1920px;
   height: 1080px;
+  flex: 1;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.es-router-view {
+  width: 1920px;
+  height: 1080px;
+  background-color: palevioletred;
 }
 </style>

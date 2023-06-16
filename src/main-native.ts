@@ -1,11 +1,15 @@
 import {
-  createApp,
-  HippyApp,
+  createApp, EventBus,
+  HippyApp, setScreenSize,
 } from '@hippy/vue-next';
 
-import App from './App.vue';
+import ESApp from './App.vue';
 
-const app: HippyApp = createApp(App, {
+import Vue from 'vue';
+
+console.log('------33333333333333333333-----------????????')
+
+const app: HippyApp = createApp(ESApp, {
   appName: 'EsApp',
   trimWhitespace: true,
 });
@@ -17,17 +21,32 @@ setESApp(app);
 //-------------------ESComponent-----------------
 // import {ESComponent} from "@extscreen/es-component";
 // app.use(ESComponent);
-//-------------------ESRouter---------------------
+
+
+setScreenSize({
+  width: 1920,
+  height: 1080,
+});
+
 import ESRouter from "./ESRouter/src/index.js";
 import routes from './routes';
-
+//-------------------ESRouter---------------------
 const router = new ESRouter(routes);
-app.use(router);
+console.log('------2-------initCallback-------------????????' + Vue)
+app.use(ESRouter);
+
+console.log('------3-------initCallback-------------????????')
 
 //----------------------------------------------
 const initCallback = ({superProps, rootViewId}) => {
-  router.push('/');
+  console.log('------1-------initCallback-------------????????')
   app.mount('#root');
+  let route = {
+    name: 'index',
+    params: {},
+  }
+  router.push(route);
+  console.log('------4-------initCallback-------------????????')
 };
 
 app.$start().then(initCallback);
