@@ -66,6 +66,7 @@ module.exports = {
       __VUE_OPTIONS_API__: true,
       __VUE_PROD_DEVTOOLS__: false,
       __PLATFORM__: null,
+      __DEV__: true,
     }),
     new HippyDynamicImportPlugin(),
     // LimitChunkCountPlugin can control dynamic import ability
