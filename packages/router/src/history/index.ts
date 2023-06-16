@@ -5,7 +5,7 @@
  */
 import {RouterHistory} from "./common";
 import {RouteRecordRaw} from "../types";
-import {createRouter, Router} from "../router";
+import {createRouter, Router, RouterOptions} from "../router";
 
 import {BackAndroid, Native} from '@hippy/vue-next';
 import {HippyRouterHistory, createHippyHistory} from './history';
@@ -27,6 +27,7 @@ function injectAndroidHardwareBackPress(router: Router) {
         return true;
       }
       // if no any other history, exit app
+      return false;
     }
 
     // we need call hippy native function to inject hardware press, when router is ready, hippy native registered.
@@ -50,10 +51,14 @@ export function createHippyRouter(options: {
   routes: Readonly<RouteRecordRaw[]>;
   noInjectAndroidHardwareBackPress?: boolean;
 }): Router {
-  const router: Router = createRouter({
+  const option: RouterOptions = {
     history: options.history ?? createHippyHistory(),
     routes: options.routes,
-  });
+    sensitive: false,
+    strict: false,
+    end: false,
+  };
+  const router: Router = createRouter(option);
 
   // if you do not need the default inject logic, you can pass true to not inject,
   // then you can write your own inject logic.

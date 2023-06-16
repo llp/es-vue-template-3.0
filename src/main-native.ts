@@ -14,7 +14,6 @@ const app: HippyApp = createApp(ESApp, {
 
 //--------------------ESApp-----------------------
 import {setESApp} from "./ESCore/core/app/ESApp.js";
-import {createHippyRouter} from "@hippy/vue-router-next-history";
 
 setESApp(app);
 //-------------------ESComponent-----------------
@@ -30,10 +29,17 @@ setESApp(app);
 //-------------------ESRouter---------------------
 // import ESRouter from "./ESRouter/src/index.js";
 import routes from './routes';
+import {createHippyHistory, createHippyRouter} from "../packages/router/src/history";
+import {createRouter, Router, RouterOptions} from "../packages/router/src";
 
-const router = createHippyRouter({
-  routes,
-});
+const options: RouterOptions = {
+  history: createHippyHistory(),
+  routes: routes,
+  sensitive: false,
+  strict: false,
+  end: false,
+}
+const router = createRouter(options);
 app.use(router);
 //----------------------------------------------
 const initCallback = ({superProps, rootViewId}) => {
