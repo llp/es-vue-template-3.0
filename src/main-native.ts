@@ -4,6 +4,7 @@ import {
 } from '@hippy/vue-next';
 
 import ESApp from './App.vue';
+
 console.log('------33333333333333333333-----------????????')
 
 const app: HippyApp = createApp(ESApp, {
@@ -13,6 +14,7 @@ const app: HippyApp = createApp(ESApp, {
 
 //--------------------ESApp-----------------------
 import {setESApp} from "./ESCore/core/app/ESApp.js";
+import {createHippyRouter} from "@hippy/vue-router-next-history";
 
 setESApp(app);
 //-------------------ESComponent-----------------
@@ -27,8 +29,12 @@ setESApp(app);
 
 //-------------------ESRouter---------------------
 // import ESRouter from "./ESRouter/src/index.js";
-// import routes from './routes';
-// app.use(ESRouter);
+import routes from './routes';
+
+const router = createHippyRouter({
+  routes,
+});
+app.use(router);
 //----------------------------------------------
 const initCallback = ({superProps, rootViewId}) => {
   console.log('------1-------initCallback-------------????????')
