@@ -21,8 +21,8 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 
-import { getVue } from '@vue/util/index';
-import { once } from 'shared/util';
+import { getVue } from '../utils/index';
+import { once } from '../utils/index';
 import { warn, isError } from './warn';
 
 const hasSymbol = typeof Symbol === 'function'

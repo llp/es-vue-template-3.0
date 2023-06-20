@@ -37,3 +37,50 @@ export const noop = () => {}
  */
 export const isArray: (arg: ArrayLike<any> | any) => arg is ReadonlyArray<any> =
   Array.isArray
+
+
+function isFunction(func) {
+  return Object.prototype.toString.call(func) === '[object Function]';
+}
+
+let _Vue;
+let _App;
+
+function setVue(Vue) {
+  _Vue = Vue;
+}
+
+function getVue() {
+  return _Vue;
+}
+
+function setApp(app) {
+  _App = app;
+}
+
+function getApp() {
+  return _App;
+}
+
+
+/**
+ * Ensure a function is called only once.
+ */
+function once(fn) {
+  let called = false
+  return function () {
+    if (!called) {
+      called = true
+      fn.apply(this, arguments)
+    }
+  }
+}
+
+export {
+  once,
+  setVue,
+  getVue,
+  setApp,
+  getApp,
+  isFunction,
+};
