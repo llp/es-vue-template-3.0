@@ -19,7 +19,7 @@
  */
 
 import type { ComponentInternalInstance } from '@vue/runtime-core';
-import { callWithAsyncErrorHandling, ErrorCodes } from '@vue/runtime-core';
+import { callWithAsyncErrorHandling } from '@vue/runtime-core';
 
 import type { CallbackType } from '../types';
 import type { HippyElement } from '../runtime/element/hippy-element';
@@ -81,7 +81,7 @@ function createInvoker(
     callWithAsyncErrorHandling(
       invoker.value as Invoker,
       instance,
-      ErrorCodes.NATIVE_EVENT_HANDLER,
+      5,
       [e],
     );
   };

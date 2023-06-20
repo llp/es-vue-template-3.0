@@ -317,17 +317,14 @@ export {
   HippyEvent,
   HippyTouchEvent,
   HippyKeyboardEvent,
-  HippyGlobalEventHandlersEventMap,
   HippyLayoutEvent,
   HippyLoadResourceEvent,
-  EventsUnionType,
   ExposureEvent,
   FocusEvent,
   ContentSizeEvent,
   ListViewEvent,
   ViewPagerEvent,
   eventIsKeyboardEvent,
-  MapToUnion,
 } from './runtime/event/hippy-event';
 
 export {

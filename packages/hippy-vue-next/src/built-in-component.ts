@@ -24,7 +24,7 @@
 
 import type { NeedToTyped } from './types';
 import { NATIVE_COMPONENT_MAP, HIPPY_DEBUG_ADDRESS } from './config';
-import { registerElement, type ElementComponent } from './runtime/component';
+import { registerElement, ElementComponent } from './runtime/component';
 import type { EventsUnionType } from './runtime/event/hippy-event';
 import { Native } from './runtime/native';
 import type { HippyNode } from './runtime/node/hippy-node';
