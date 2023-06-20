@@ -1,7 +1,7 @@
 import {
   createApp,
   HippyApp,
-} from '@hippy/vue-next';
+} from "../packages/hippy-vue-next/src";
 
 import ESApp from './App.vue';
 
@@ -29,8 +29,8 @@ setESApp(app);
 //-------------------ESRouter---------------------
 // import ESRouter from "./ESRouter/src/index.js";
 // import routes from './routes';
-import {createHippyHistory, createHippyRouter} from "../packages/router/src/history";
-import {createRouter, Router, RouteRecordRaw, RouterOptions} from "../packages/router/src";
+import {createHippyHistory, createHippyRouter} from "../packages/hippy-vue-router/src/history";
+import {createRouter, Router, RouteRecordRaw, RouterOptions} from "../packages/hippy-vue-router/src";
 
 import index from "./views/index";
 import error from "./views/error";
@@ -72,14 +72,15 @@ const router = createRouter(options);
 app.use(router);
 //----------------------------------------------
 const initCallback = ({superProps, rootViewId}) => {
-  console.log('------1-------initCallback-------------????????')
+  console.log(superProps + '------1-------initCallback-------------' + rootViewId)
   // let route = {
   //   name: 'index',
   //   params: {},
   // }
-  router.push('/index');
+  // router.push('/index');
   app.mount('#root');
-  console.log('------4-------initCallback-------------????????')
+  console.log(superProps + '------4-------initCallback-------------' + rootViewId)
 };
-
 app.$start().then(initCallback);
+
+

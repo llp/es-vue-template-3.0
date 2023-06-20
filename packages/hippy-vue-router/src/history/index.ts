@@ -7,7 +7,7 @@ import {RouterHistory} from "./common";
 import {RouteRecordRaw} from "../types";
 import {createRouter, Router, RouterOptions} from "../router";
 
-import {BackAndroid, Native} from '@hippy/vue-next';
+import {BackAndroid, Native} from "../../../hippy-vue-next/src";
 import {HippyRouterHistory, createHippyHistory} from './history';
 
 /**

@@ -1,12 +1,13 @@
 <template>
   <div id="root">
-    <router-view class="es-router-view"/>
+<!--    <router-view class="es-router-view"/>-->
   </div>
 </template>
 
 <script>
 import {defineComponent, ref} from '@vue/runtime-core';
-import {Native} from "@hippy/vue-next";
+import {Native} from "../packages/hippy-vue-next/src";
+// import {Native} from "@hippy/vue-next";
 
 export default defineComponent({
   name: 'App',
@@ -24,9 +25,9 @@ export default defineComponent({
   width: 1920px;
   height: 1080px;
   flex: 1;
-  background-color: white;
   display: flex;
   flex-direction: column;
+  background-color: #FF5415;
 }
 
 .es-router-view {
