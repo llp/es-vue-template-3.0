@@ -21,8 +21,8 @@
 import {
   parseBackgroundImage,
   PROPERTIES_MAP,
-  type PropertiesMapType,
-} from '@hippy-vue-next-style-parser/index';
+  PropertiesMapType,
+} from '../../../../hippy-vue-next-style-parser/src';
 import { toRaw } from '@vue/runtime-core';
 import { isFunction, isString } from '@vue/shared';
 
@@ -44,8 +44,8 @@ import { isRTL } from '../../util/i18n';
 import { EventMethod } from '../../util/event';
 import { getHippyCachedInstance } from '../../util/instance';
 import { parseRemStyle } from '../../util/rem';
-import { getTagComponent, type TagComponent } from '../component';
-import { eventIsKeyboardEvent, type HippyEvent } from '../event/hippy-event';
+import { getTagComponent, TagComponent } from '../component';
+import { eventIsKeyboardEvent, HippyEvent } from '../event/hippy-event';
 import type { EventListenerOptions } from '../event/hippy-event-target';
 import { Native } from '../native';
 import { HippyNode, NodeType } from '../node/hippy-node';

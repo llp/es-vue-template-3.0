@@ -18,15 +18,15 @@
  * limitations under the License.
  */
 
-import { translateColor } from '@hippy-vue-next-style-parser/index';
+import { translateColor } from '../../../../hippy-vue-next-style-parser/src';
 import { isFunction } from '@vue/shared';
 
 import type { NeedToTyped, CallbackType, NativeInterfaceMap } from '../../types';
 import { NATIVE_COMPONENT_MAP, HIPPY_VUE_VERSION } from '../../config';
 import { isStyleMatched, trace, warn } from '../../util';
-import { type HippyElement } from '../element/hippy-element';
+import {  HippyElement } from '../element/hippy-element';
 import { EventBus } from '../event/event-bus';
-import { type HippyNode } from '../node/hippy-node';
+import {  HippyNode } from '../node/hippy-node';
 import { getCssMap } from '../style/css-map';
 
 // Extend the global interface definition

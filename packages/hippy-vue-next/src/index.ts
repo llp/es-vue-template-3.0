@@ -19,15 +19,15 @@
  */
 
 import {
-  type CssNodeType,
-  type CssDeclarationType,
+  CssNodeType,
+  CssDeclarationType,
   parseCSS,
   translateColor,
-} from '@hippy-vue-next-style-parser/index';
+} from '../../hippy-vue-next-style-parser/src';
 import {
-  type Component,
-  type ComponentPublicInstance,
-  type App,
+  Component,
+  ComponentPublicInstance,
+  App,
   createRenderer,
 } from '@vue/runtime-core';
 import { isFunction } from '@vue/shared';
@@ -39,7 +39,7 @@ import { drawIphoneStatusBar } from './iphone';
 import HippyNativeComponents from './native-component';
 import { nodeOps } from './node-ops';
 import { patchProp } from './patch-prop';
-import { getTagComponent, registerElement, type TagComponent, type ElementComponent } from './runtime/component';
+import { getTagComponent, registerElement, TagComponent, ElementComponent } from './runtime/component';
 import { HippyDocument } from './runtime/document/hippy-document';
 import type { HippyElement } from './runtime/element/hippy-element';
 import type { HippyInputElement } from './runtime/element/hippy-input-element';
